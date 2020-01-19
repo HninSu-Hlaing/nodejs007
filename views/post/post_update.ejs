@@ -1,0 +1,161 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partial/head %>
+</head>
+<body>
+
+	<div class="wrapper">
+    <div class="main-header">
+      <% include ../partial/header %>
+
+      <% include ../partial/navbar %>
+
+    </div>
+    <% include ../partial/slidebar %>
+		<div class="main-panel">
+			<div class="content">
+				<div class="row">
+					<div class="col-md-2">
+						
+					</div>
+					<div class="col-md-8">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-title">Form Elements</div>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-8 col-lg-4">
+										<form class="" action="/posts/postupdate" method="post" id="myform">
+											<input type="hidden" name="id" value="<%=post._id%>">
+                      <div class="form-group">
+  											<label for="title">Title</label>
+  											<input type="text" class="form-control" id="title" name="title" value="<%= post.title %>">
+  											<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  										</div>
+										<div class="form-group">
+											<label for="content">Content</label>
+											<input type="text" class="form-control" id="content" name="content" value="<%= post.content %>">
+											<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+										</div>
+										<div class="form-group">
+                      <label for="author">Author:</label>
+                      <select name="author" id="author">
+                        <% for(var i=0;i<users.length;i++){%>
+                            <option value="<%=users[i]._id%>"<%= (users[i]._id.equals(post.author))? "selected":"" %> ><%=users[i].name%></option>
+                          <%}%>
+                      </select>
+										</div>
+										<div class="card-action">
+											<button type="submit"class="btn btn-success">Submit</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+  <% include ../partial/script %>
+</body>
+        <script type="text/javascript" src="/javascripts/jquery.js"></script>
+
+        <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>
+
+        <script type="text/javascript">
+          $('#email').blur(function () {
+            var datap={email:$('#email').val()};
+            if(datap.email != ''){
+              $.ajax({url:'/users/duemail',data:datap,type:'POST',
+            success:function (result) {
+              if(result.status){
+                alert("duplicate email or email validator!");
+                $('#email').val('');
+                $('#email').focus();
+              }
+            }})
+            }
+          })
+          $('#myform').validate({
+            rules:{
+              name:{
+                required:true,
+                minlength:3,
+                maxlength:20
+              },
+              email:{
+                required:true,
+                emailExt:true
+
+              },
+              pwd:{
+                required:true,
+                minlength:6,
+                pwcheck:true
+
+              }
+            },
+            messages:{
+              name:{
+                required:'User name is required'
+                // maxlength:'please enter do not more than 20 characters '
+              },
+              email:{
+                required:'User email is required'
+              },
+              pwd:{
+                required:'User password is required',
+                pwcheck:'Please enter 1 uppercase,1 lowercase, 1 digit'
+                // maxlength:'please enter do not more than 20 characters'
+              },
+              maxlength:$.validator.format("Please insert max {0} characters"),
+              minlength:$.validator.format("Please insert atleast {0} characters"),
+
+            }
+          })
+            jQuery.validator.addMethod("emailExt", function(value, element, param) {
+            return value.match(/^[a-zA-Z0-9_\.%\+\-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}$/);
+        },'Your E-mail is wrong');//jquery validate email rule
+
+          $.validator.addMethod("pwcheck", function(value) {
+         return /^[A-Za-z0-9\d=!\-@._*]*$/.test(value) // consists of only these
+             && /[a-z]/.test(value) // has a lowercase letter
+             && /[A-Z]/.test(value) // has a uppercase letter
+             && /\d/.test(value) // has a digit
+           });
+      </script>
+
+</html>
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Post Update</title>
+  </head>
+  <body>
+    <h1>Post Update</h1>
+    <form class="" action="/posts/postupdate" method="post">
+      <input type="hidden" name="id" value="<%=post._id%>">
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title" value="<%= post.title %>"><br>
+        <label for="content">Content:</label>
+        <input type="content" name="content" id="content" value="<%= post.content%>"><br>
+        <label for="author">Author:</label>
+        <select name="author" id="author">
+          <% for(var i=0;i<users.length;i++){%>
+              <option value="<%=users[i]._id%>"<%= (users[i]._id.equals(post.author))? "selected":"" %> ><%=users[i].name%></option>
+            <%}%>
+        </select><br>
+        <input type="submit" name="" value="Submit">
+    </form>
+  </body>
+</html> -->

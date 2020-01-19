@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include partial/head %>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="main-panel">
+			<div class="content">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-title">Form Elements</div>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-8 col-lg-4">
+										<form class="" action="/signin" method="post">
+
+										<div class="form-group">
+											<label for="email">Email Address</label>
+											<input type="email" class="form-control" id="email" name="email" placeholder="Enter email...">
+											<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+										</div>
+										<div class="form-group">
+											<label for="password">Password</label>
+											<input type="password" class="form-control" id="password" name="pwd" placeholder="Enter password...">
+											<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+										</div>
+										<input type="checkbox" name="" id="rememberMe" value="">Remember Me<p>
+										<div class="card-action">
+											<button type="submit"class="btn btn-success">Signin</button>
+											<button type="reset" class="btn btn-danger">Cancel</button>
+										</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type="text/javascript" src="/javascripts/js.cookie.min.js"></script>
+<script type="text/javascript">
+	$('#rememberMe').click(function () {
+		if($(this).prop('checked') == true){
+			// console.log("call");
+			Cookies.set('email',$('#email').val(),{expires:7});
+		}else {
+			Cookies.remove('email');
+		}
+	});
+	if(Cookies.get('email')){
+		$('#email').val(Cookies.get('email'));
+		$('#rememberMe').prop('checked',true);
+	}
+</script>
+</html>

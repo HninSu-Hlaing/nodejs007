@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partial/head %>
+</head>
+<body>
+
+	<div class="wrapper">
+    <div class="main-header">
+      <% include ../partial/header %>
+
+      <% include ../partial/navbar %>
+
+    </div>
+    <% include ../partial/slidebar %>
+		<div class="main-panel">
+			<div class="content">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-title">Form Elements</div>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-8 col-lg-4">
+										<form class="" action="/users/userupdate" method="post" id="myform">
+											<input type="hidden" name="id" value="<%=user._id%>">
+                      <div class="form-group">
+  											<label for="name">Name</label>
+  											<input type="text" class="form-control" id="name" name="name" value="<%= user.name %>">
+  											<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  										</div>
+										<div class="form-group">
+											<label for="email">Email Address</label>
+											<input type="email" class="form-control" id="email" name="email" value="<%= user.email %>">
+											<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+										</div>
+										<div class="form-group">
+											<label for="password">Password</label>
+											<input type="password" class="form-control" id="password" name="pwd">
+											<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+										</div>
+										<div class="card-action">
+											<button type="submit"class="btn btn-success">Submit</button>
+
+										</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+  <% include ../partial/script %>
+</body>
+        <script type="text/javascript" src="/javascripts/jquery.js"></script>
+
+        <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>
+
+        <script type="text/javascript">
+          $('#email').blur(function () {
+            var datap={email:$('#email').val()};
+            if(datap.email != ''){
+              $.ajax({url:'/users/duemail',data:datap,type:'POST',
+            success:function (result) {
+              if(result.status){
+                alert("duplicate email or email validator!");
+                $('#email').val('');
+                $('#email').focus();
+              }
+            }})
+            }
+          })
+          $('#myform').validate({
+            rules:{
+              name:{
+                required:true,
+                minlength:3,
+                maxlength:20
+              },
+              email:{
+                required:true,
+                emailExt:true
+
+              },
+              pwd:{
+                required:true,
+                minlength:6,
+                pwcheck:true
+
+              }
+            },
+            messages:{
+              name:{
+                required:'User name is required'
+                // maxlength:'please enter do not more than 20 characters '
+              },
+              email:{
+                required:'User email is required'
+              },
+              pwd:{
+                required:'User password is required',
+                pwcheck:'Please enter 1 uppercase,1 lowercase, 1 digit'
+                // maxlength:'please enter do not more than 20 characters'
+              },
+              maxlength:$.validator.format("Please insert max {0} characters"),
+              minlength:$.validator.format("Please insert atleast {0} characters"),
+
+            }
+          })
+            jQuery.validator.addMethod("emailExt", function(value, element, param) {
+            return value.match(/^[a-zA-Z0-9_\.%\+\-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}$/);
+        },'Your E-mail is wrong');//jquery validate email rule
+
+          $.validator.addMethod("pwcheck", function(value) {
+         return /^[A-Za-z0-9\d=!\-@._*]*$/.test(value) // consists of only these
+             && /[a-z]/.test(value) // has a lowercase letter
+             && /[A-Z]/.test(value) // has a uppercase letter
+             && /\d/.test(value) // has a digit
+      });
+        </script>
+
+</html>
