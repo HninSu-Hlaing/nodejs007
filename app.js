@@ -9,6 +9,8 @@ var session=require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postRouter=require('./routes/posts');
+var apiUserRouter=require('./api/routes/users');
+var apiAdminRouter=require('./api/routes/admin');
 
 var app = express();
 
@@ -38,6 +40,11 @@ app.use(function (req,res,next) {
 });
 
 app.use('/', indexRouter);
+//Restful api route
+app.use('/api/users',apiUserRouter);
+app.use('/api',apiAdminRouter);
+
+
 app.use(function(req,res,next){
   if(req.session.user){
     next();

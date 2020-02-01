@@ -78,5 +78,5 @@ router.post('/duemail',function (req,res) {
     if(err) throw err;
     (rtn != null)?res.json({status:true}):res.json({status:false});
   });
-})
+});
 module.exports = router;
