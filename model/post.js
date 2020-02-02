@@ -11,7 +11,7 @@ var PostSchema=new Schema({
   },
   author:{
     type:Schema.Types.ObjectId,
-    ref:'Users',
+    ref:'Users'
   }
 });
 module.exports=mongoose.model('Posts',PostSchema);

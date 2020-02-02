@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Post=require('../model/post');
 var User=require('../model/user');
+var bcrypt=require('bcryptjs');
 
 /* GET users listing. */
 router.get('/home',function (req,res,next) {
@@ -69,6 +70,12 @@ router.get('/postdelete/:id',function (req,res) {
   Post.findByIdAndRemove(req.params.id,function (err,rtn) {
     if(err)throw err;
     res.redirect('/posts/postlist');
+  });
+});
+router.post('/duemail',function (req,res) {
+  Post.findOne({email:req.body.email},function (err,rtn) {
+    if(err) throw err;
+    (rtn != null)?res.json({status:true}):res.json({status:false});
   });
 });
 module.exports=router;

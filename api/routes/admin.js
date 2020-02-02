@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Admin=require('../../model/Admin');
 var jwt=require('jsonwebtoken');
+
 router.post('/signup',function(req,res){
   var admin=new Admin();
   admin.name=req.body.name;

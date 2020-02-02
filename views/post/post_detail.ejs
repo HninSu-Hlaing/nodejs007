@@ -22,10 +22,10 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="row">
-					<div class="col-md-2">
+					<!-- <div class="col-md-2">
 
-					</div>
-					<div class="col-md-8">
+					</div> -->
+					<div class="col-md-4">
 						<div class="card card-post card-round">
 							<img class="card-img-top" src="/assets/img/blogpost.jpg" alt="Card image cap">
 							<div class="card-body">
@@ -138,7 +138,7 @@
 	function del() {
 		var a=confirm("Are you sure to delete!!!");
 		if(a){
-			location.href="/posts/post_delete/<%=posts._id %>";
+			location.href="/posts/postdelete/<%=posts._id %>";
 		}
 
 	}
