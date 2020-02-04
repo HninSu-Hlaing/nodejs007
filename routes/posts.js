@@ -49,7 +49,7 @@ router.get('/postupdate/:uid',function(req,res,next){
     User.find(function (err2,rtn2) {
     if(err2)throw err2;
     console.log(rtn);
-    res.render('post/post_update',{post:rtn,users:rtn2});
+    res.render('post/post_update',{posts:rtn,users:rtn2});
   });
   });
 });
